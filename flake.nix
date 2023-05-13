@@ -6,32 +6,33 @@
     home-manager = {
         url = "github:nix-community/home-manager";
         inputs.nixpkgs.follows = "nixpkgs";
-    };  
+    };
 
     nixpkgs-f2k.url = "github:fortuneteller2k/nixpkgs-f2k";
   };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, ... }:
+  outputs = { self, nixpkgs, home-manager, ... }@inputs:
     let
       inherit (self) outputs;
       user = "fede"; 
       forAllSystems = nixpkgs.lib.genAttrs [
         "x86_64-linux"
       ];
+      pkgs = nixpkgs.legacyPackages."x86_64-linux";
     in
     {
       # Devshell for bootstrapping
       # Acessible through 'nix develop' or 'nix-shell' (legacy)
-      devShells = forAllSystems (system:
-        let pkgs = nixpkgs.legacyPackages.${system};
-        in import ./shell.nix { inherit pkgs; }
-      );
+      # devShells = forAllSystems (system:
+      #   let pkgs = nixpkgs.legacyPackages.${system};
+      #   in import ./shell.nix { inherit pkgs; }
+      # );
 
-      # nixosModules = import ./modules/nixos;
-      # homeManagerModules = import ./modules/home-manager;
+      nixosModules = import ./modules/nixos;
+      homeManagerModules = import ./modules/home-manager;
       # templates = import ./templates;
 
-      overlays = import ./overlays { inherit inputs outputs; };
+      overlays = import ./overlays { inherit inputs outputs pkgs; };
 
       # NixOS configuration entrypoint
       # Available through 'sudo nixos-rebuild switch --flake .#your-hostname'
@@ -40,7 +41,7 @@
         desktop = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [
-            ./hosts/configuration.nix
+            ./hosts/desktop
           ];
         };
       };

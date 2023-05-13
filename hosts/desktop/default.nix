@@ -1,6 +1,7 @@
-{ inputs, lib, config, pkgs, ... }:
+{ inputs, lib, config, pkgs ... }:
 let 
   hostName = "desktop";
+  user = "fede";
 in
 {
   imports =
@@ -12,7 +13,7 @@ in
       ../common/users/fede
 
       # desktop 
-      (../common/optional/awesomewm.nix ( { user = "fede"; } ))
+      ../common/optional/awesomewm.nix
 
       # optional
       ../common/optional/gamemode.nix
@@ -30,12 +31,10 @@ in
   };
 
   networking = {
-    hostName = ${hostName};
-    wireless.enable = true;
+    hostName = hostName;
     useDHCP = false;
-
+    
     networkmanager.enable = true;
-
     # interfaces.enp8s0 = {
     #   useDHCP = true;
     #   wakeOnLan.enable = true;

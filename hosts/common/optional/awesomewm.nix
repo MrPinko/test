@@ -1,4 +1,5 @@
-{ inputs, lib, config, pkgs, user, ... }: {
+{ inputs, lib, config, pkgs, ... }: 
+{
   # Enable the X11 windowing system.
   services = {
     xserver = {
@@ -9,7 +10,7 @@
       displayManager = {
         autoLogin = {
           enable = true;
-          user = user;
+          user = fede;
         };
 
         defaultSession = "none+awesome";

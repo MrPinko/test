@@ -4,15 +4,15 @@ let
 in
 {
 	imports = [
-		inputs.impermanence.nixosModules.home-manager.impermanence
 		../features/cli
 		# ../features/games
-	] ++ (outputs.homeManagerModules);
-	# ] ++ (builtins.attrValues outputs.homeManagerModules);
+	] ++ (builtins.attrValues outputs.homeManagerModules);
 
 	nixpkgs = {
 		# overlays = builtins.attrValues outputs.overlays;
-		overlays = outputs.overlays;
+		overlays = [
+			outputs.overlays.awesome-git
+		];
 		config = {
 			allowUnfree = true;
 			allowUnfreePredicate = (_: true);
@@ -40,7 +40,7 @@ in
 		sessionPath = [ "$HOME/.local/bin" ];
 
 		# https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-		stateVersion = lib.mkDefault "22.11";
+		stateVersion = "22.11";
 
 		# persistence = {
 		# 	"/persist/home/fede" = {

@@ -4,9 +4,9 @@ let
   user = "fede";
 in
 {
-  users.mutableUsers = false;
   users.users.${user} = {
     isNormalUser = true;
+    group = "users";
     shell = pkgs.zsh;
     extraGroups = [
       "wheel"
@@ -22,7 +22,7 @@ in
       "git"
     ];
 
-    packages = wiht pkgs; [ 
+    packages = with pkgs; [ 
         # home-manager
 
         firefox
@@ -34,6 +34,4 @@ in
 
   home-manager.users.${user} = import ../../../../home/${user}/${config.networking.hostName}.nix;
 
-  services.geoclue2.enable = true;
-  security.pam.services = { swaylock = { }; };
 }
