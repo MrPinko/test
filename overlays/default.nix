@@ -1,24 +1,16 @@
-# This file defines overlays
-{ inputs, ... }:
+{ outputs, inputs }:
 {
-  # This one brings our custom packages from the 'pkgs' directory
-  additions = final: _prev: import ../pkgs { pkgs = final; };
 
-  # This one contains whatever you want to overlay
-  # You can change versions, add patches, set compilation flags, anything really.
-  # https://nixos.wiki/wiki/Overlays
-  modifications = final: prev: {
-    # example = prev.example.overrideAttrs (oldAttrs: rec {
-    # ...
-    # });
-  };
+  # Modifies existing packages
+  modifications = (self: super: {
+    awesome = inputs.nixpkgs-f2k.packages.${pkgs.system}.awesome-git;
+  
+    # discord = super.discord.overrideAttrs (
+    #   _: { src = builtins.fetchTarball {
+    #     url = "https://discord.com/api/download?platform=linux&format=tar.gz";
+    #     sha256 = "1z980p3zmwmy29cdz2v8c36ywrybr7saw8n0w7wlb74m63zb9gpi";
+    #   };}
+    # );
+  });
 
-  # When applied, the unstable nixpkgs set (declared in the flake inputs) will
-  # be accessible through 'pkgs.unstable'
-  unstable-packages = final: _prev: {
-    unstable = import inputs.nixpkgs-unstable {
-      system = final.system;
-      config.allowUnfree = true;
-    };
-  };
 }
