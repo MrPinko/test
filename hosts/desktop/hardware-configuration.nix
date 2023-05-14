@@ -8,27 +8,28 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "uas" "usb_storage" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
-
-  fileSystems."/" =
-    { device = "/dev/disk/by-label/nixos";
-      fsType = "ext4";
+  boot = {
+    initrd = {
+      availableKernelModules = [ "ata_piix" "sr_mod" "uhci_hcd" "virtio_blk" "virtio_pci" ];
     };
-
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-label/boot";
-      fsType = "vfat";
+    loader.grub = {
+      enable = true;
+      version = 2;
     };
-
-  networking = {
-    useDHCP = lib.mkDefault true;
-    hostName = "desktop";
   };
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  fileSystems."/" = {
+    device = "/dev/disk/by-label/desktop";
+    fsType = "ext4";
+  };
+
+  fileSystems."/boot" = { 
+    device = "/dev/disk/by-label/desktop";
+    fsType = "vfat";
+  };
+
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.intel.updateMicrocode = true;
+
+  nixpkgs.hostPlatform = "x86_64-linux";
 }

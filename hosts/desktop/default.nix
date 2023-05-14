@@ -1,7 +1,6 @@
-{ inputs, lib, config, pkgs ... }:
+{ inputs, lib, config, pkgs, ... }:
 let 
   hostName = "desktop";
-  user = "fede";
 in
 {
   imports =
@@ -19,15 +18,30 @@ in
       ../common/optional/gamemode.nix
       ../common/optional/pipewire.nix
       ../common/optional/quietboot.nix
+      ../common/optional/printer.nix
+      ../common/optional/font.nix
+
     ];
 
   # Bootloader.
   boot.loader = {
-    systemd-boot.enable = true;
+
+    kernelPackages = pkgs.linuxPackages_latest;
+
     efi = {
       canTouchEfiVariables = true;
       efiSysMountPoint = "/boot/efi";
     };
+    grub = {
+      enable = true;
+      version = 2;
+      devices = [ "nodev" ];
+      efiSupport = true;
+      useOSProber = true;                 # Find all boot options
+    };
+
+    timeout = 5; 
+    
   };
 
   networking = {
@@ -53,15 +67,6 @@ in
     #   };
     # };
   };
-
-  console.keyMap = "it2";
-
-
-
-  # Configure console keymap
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

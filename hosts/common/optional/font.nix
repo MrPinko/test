@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  fontProfiles = {
+  options.fontProfiles = {
     enable = true;
     monospace = {
       family = "FiraCode Nerd Font";

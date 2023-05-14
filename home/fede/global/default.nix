@@ -5,8 +5,10 @@ in
 {
 	imports = [
 		../features/cli
+		../features/web
+		../features/editor/vscode.nix
 		# ../features/games
-	] ++ (builtins.attrValues outputs.homeManagerModules);
+	];
 
 	nixpkgs = {
 		# overlays = builtins.attrValues outputs.overlays;
@@ -42,18 +44,6 @@ in
 		# https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
 		stateVersion = "22.11";
 
-		# persistence = {
-		# 	"/persist/home/fede" = {
-		# 	directories = [
-		# 		"Documents"
-		# 		"Downloads"
-		# 		"Pictures"
-		# 		"Videos"
-		# 		".local/bin"
-		# 	];
-		# 	allowOther = true;
-		# 	};
-		# };
 	};
 
 }

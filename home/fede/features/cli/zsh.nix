@@ -6,7 +6,7 @@ let
   hasNeovim = config.programs.neovim.enable;
 in
 {
-  programs.fish = {
+  programs.zsh = {
     enable = true;
     shellAbbrs = rec {
       jqless = "jq -C | less -r";

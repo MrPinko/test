@@ -4,13 +4,11 @@
   services = {
     xserver = {
       enable = true;
-      layout = "it";
-      xkbVariant = "";
 
       displayManager = {
         autoLogin = {
           enable = true;
-          user = fede;
+          user = "fede";
         };
 
         defaultSession = "none+awesome";
