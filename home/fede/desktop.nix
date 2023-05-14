@@ -1,23 +1,19 @@
+# DESKTOP CONFIGURATION
+
 { inputs, outputs, lib, config, pkgs, ... }: {
   imports = [
+    # minimal configuration 
     ./global
 
-    ./features/chat/discord.nix
+    ./features/web/chromium.nix
+
+    ./features/programs/discord.nix
+    ./features/programs/alacritty.nix
+    ./features/programs/thunar.nix
 
     # games
+    #./features/games
     #./features/games/honkers.nix
-  ];
-
-  home.packages = with pkgs; [
-
-    # TERMINAL
-    alacritty
-
-    # FILE
-    xfce4.thunar
-
-    # CHAT
-    discord
   ];
 
 }

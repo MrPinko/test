@@ -1,5 +1,5 @@
-{}:{
+{
     programs.htop = {
-        enable = true
-    }
+        enable = true;
+    };
 }

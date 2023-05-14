@@ -9,5 +9,10 @@ in
     aagl-gtk-on-nix.module
   ];
 
+  nix.settings = {
+    substituters = [ "https://ezkea.cachix.org" ];
+    trusted-public-keys = [ "ezkea.cachix.org-1:ioBmUbJTZIKsHmWWXPe1FSFbeVe+afhfgqgTSNd34eI=" ];
+  };
+
   programs.the-honkers-railway-launcher.enable = true;
 }

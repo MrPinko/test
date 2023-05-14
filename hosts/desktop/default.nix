@@ -26,7 +26,7 @@ in
   # Bootloader.
   boot.loader = {
 
-    kernelPackages = pkgs.linuxPackages_latest;
+    #kernelPackages = pkgs.linuxPackages_latest;
 
     efi = {
       canTouchEfiVariables = true;

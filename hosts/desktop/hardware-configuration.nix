@@ -23,10 +23,15 @@
     fsType = "ext4";
   };
 
-  fileSystems."/boot" = { 
+  fileSystems."/boot/efi" = { 
     device = "/dev/disk/by-label/desktop";
     fsType = "vfat";
   };
+
+  swapDevices = [{
+    device = "/swap/swapfile";
+    size = 8196;
+  }];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = true;

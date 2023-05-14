@@ -4,17 +4,18 @@ let
 in
 {
 	imports = [
+
 		../features/cli
-		../features/web
-		../features/editor/vscode.nix
-		# ../features/games
-	];
+		../features/web/firefox.nix
+		../features/programs/vscode.nix
+
+	] ++ (builtins.attrValues outputs.homeManagerModules);
 
 	nixpkgs = {
-		# overlays = builtins.attrValues outputs.overlays;
-		overlays = [
-			outputs.overlays.awesome-git
-		];
+		overlays = builtins.attrValues outputs.overlays;
+		# overlays = [
+		# 	outputs.overlays.awesome-git
+		# ];
 		config = {
 			allowUnfree = true;
 			allowUnfreePredicate = (_: true);
