@@ -2,11 +2,14 @@
 { inputs, outputs, ... }: {
   imports = [
     inputs.home-manager.nixosModules.home-manager
-    ./locale.nix
     ./auto-upgrade.nix
-    ./zsh.nix
+    ./locale.nix
     ./steam-hardware.nix
+    ./zsh.nix
   ] ++ (builtins.attrValues outputs.nixosModules);
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" "repl-flake" ];
+
 
   home-manager.extraSpecialArgs = { inherit inputs outputs; };
 

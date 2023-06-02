@@ -47,7 +47,7 @@ in
       terminal.integrated = {
         cursorBlinking = true;
         cursorStyle = "line";
-        fontFamily = "'Fira Code NF', monospace";
+        fontFamily = "'CascadiaCove'";
         smoothScrolling = true;
       };
 
@@ -58,7 +58,7 @@ in
       };
 
       workbench = {
-        # colorTheme = "OneDark Pro";
+        colorTheme = "OneDark Pro";
         list.smoothScrolling = true;
         smoothScrolling = true;
       };

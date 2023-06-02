@@ -22,11 +22,26 @@
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
     let
       inherit (self) outputs;
-      user = "fede"; 
+      user = "fede";
+
       forAllSystems = nixpkgs.lib.genAttrs [
         "x86_64-linux"
       ];
+
+      # function for loading nixos configurations
+      mkNixos = modules: nixpkgs.lib.nixosSystem {
+        inherit modules;
+        specialArgs = { inherit inputs outputs; };
+      };
+
+      # function for loading home configurations
+      mkHome = modules: pkgs: home-manager.lib.homeManagerConfiguration {
+        inherit modules pkgs;
+        extraSpecialArgs = { inherit inputs outputs; };
+      };
+
       pkgs = nixpkgs.legacyPackages."x86_64-linux";
+
     in
     {
       # Devshell for bootstrapping
@@ -38,7 +53,6 @@
 
       nixosModules = import ./modules/nixos;
       homeManagerModules = import ./modules/home-manager;
-      # templates = import ./templates;
 
       overlays = import ./overlays { inherit inputs outputs pkgs; };
 
@@ -46,24 +60,14 @@
       # Available through 'sudo nixos-rebuild switch --flake .#your-hostname'
       # sudo nixos-rebuild switch --flake ~/.config/dotnix/#desktop
       nixosConfigurations = {
-        desktop = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-          modules = [
-            ./hosts/desktop
-          ];
-        };
+        desktop = mkHost [ ./hosts/desktop ];
       };
 
       # Standalone home-manager configuration entrypoint
       # Available through 'home-manager switch --flake ~/.config/dotnix/#your-username@your-hostname'
+      # home-manager switch --flake ~/.config/dotnix/#fede@desktop
       homeConfigurations = {
-        "fede@desktop" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-          extraSpecialArgs = { inherit inputs outputs; };
-          modules = [
-            ./home/fede/desktop.nix
-          ];
+        "fede@desktop" = mkHome [ ./home/fede/desktop.nix ] pkgs;
         };
       };
-    };
 }

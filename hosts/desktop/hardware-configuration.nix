@@ -12,9 +12,15 @@
     initrd = {
       availableKernelModules = [ "ata_piix" "sr_mod" "uhci_hcd" "virtio_blk" "virtio_pci" ];
     };
-    loader.grub = {
-      enable = true;
-      version = 2;
+    loader = {
+      grub = {
+        enable = true;
+        version = 2;
+        devices = [ "nodev" ];
+        useOSProber = true;                 # Find all boot options
+      };
+      
+      timeout = 5;
     };
   };
 
@@ -24,7 +30,7 @@
   };
 
   fileSystems."/boot/efi" = { 
-    device = "/dev/disk/by-label/desktop";
+    device = "/dev/disk/by-label/DESKTOP";
     fsType = "vfat";
   };
 
@@ -33,8 +39,8 @@
     size = 8196;
   }];
 
+  nixpkgs.hostPlatform = "x86_64-linux";
+
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = true;
-
-  nixpkgs.hostPlatform = "x86_64-linux";
 }
