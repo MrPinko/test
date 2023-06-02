@@ -15,7 +15,6 @@
     loader = {
       grub = {
         enable = true;
-        version = 2;
         devices = [ "nodev" ];
         useOSProber = true;                 # Find all boot options
       };

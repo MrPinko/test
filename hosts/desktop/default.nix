@@ -24,7 +24,7 @@
 
   networking = {
     hostName = "desktop";
-    useDHCP = true;
+    useDHCP = false;
     
     networkmanager.enable = true;
     # interfaces.enp8s0 = {
