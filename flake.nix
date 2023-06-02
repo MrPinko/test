@@ -60,7 +60,7 @@
       # Available through 'sudo nixos-rebuild switch --flake .#your-hostname'
       # sudo nixos-rebuild switch --flake ~/.config/dotnix/#desktop
       nixosConfigurations = {
-        desktop = mkHost [ ./hosts/desktop ];
+        desktop = mkNixos [ ./hosts/desktop ];
       };
 
       # Standalone home-manager configuration entrypoint

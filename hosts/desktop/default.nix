@@ -15,6 +15,7 @@
       ../common/optional/pipewire.nix
       ../common/optional/quietboot.nix
       ../common/optional/printer.nix
+      ../common/optional/font.nix
 
       ../common/optional/gc.nix
       ../common/optional/optimize-store.nix
