@@ -33,7 +33,6 @@ in
 	# systemd.user.startServices = "sd-switch";
 
 	programs = {
-		home-manager.enable = true;
 		git.enable = true;
 	};
 
@@ -44,7 +43,8 @@ in
 
 		# https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
 		stateVersion = "23.05";
-
 	};
+	
+	programs.home-manager.enable = true;
 
 }

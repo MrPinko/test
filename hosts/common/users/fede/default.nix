@@ -21,6 +21,8 @@ in
       "git"
     ];
 
+    packages = [ pkgs.home-manager ];
+
   };
 
   home-manager.users.${user} = import ../../../../home/${user}/${config.networking.hostName}.nix;

@@ -30,11 +30,12 @@ in
 
       editor = {
         cursorBlinking = "smooth";
-        fontFamily = "'monospace', monospace";
+        fontFamily = "'FiraCode Nerd Font', monospace";
         formatOnSave = true;
         lineNumbers = "on";
         minimap.enabled = false;
         smoothScrolling = true;
+        fontLignatures = true;
 
         bracketPairColorization = {
           enabled = true;
@@ -47,7 +48,7 @@ in
       terminal.integrated = {
         cursorBlinking = true;
         cursorStyle = "line";
-        fontFamily = "'CascadiaCove'";
+        fontFamily = "'CaskaydiaCove Nerd Font', monospace";
         smoothScrolling = true;
       };
 

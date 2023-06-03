@@ -8,6 +8,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    
     home-manager = {
         url = "github:nix-community/home-manager";
         inputs.nixpkgs.follows = "nixpkgs";
@@ -68,6 +69,6 @@
       # home-manager switch --flake ~/.config/dotnix/#fede@desktop
       homeConfigurations = {
         "fede@desktop" = mkHome [ ./home/fede/desktop.nix ] pkgs;
-        };
       };
+    };
 }

@@ -1,6 +1,6 @@
 { config, pkgs, ... }: {
   home.file.".config/awesome" = {
-      source = ../../../../dotfiles;
+      source = ../../../../dotfiles/awesome;
       recursive = true;
   };
 }

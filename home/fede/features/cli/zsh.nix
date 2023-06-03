@@ -22,9 +22,7 @@ in
     #   nr = "nixos-rebuild --flake .";
     #   nrs = "nixos-rebuild --flake . switch";
     #   snr = "sudo nixos-rebuild --flake .";
-    #   snrs = "sudo nixos-rebuild --flake . switch";
     #   hm = "home-manager --flake .";
-    #   hms = "home-manager --flake . switch";
 
     #   ls = mkIf hasExa "exa";
 
@@ -36,6 +34,8 @@ in
     shellAliases = {
       # Clear screen and scrollback
       clear = "printf '\\033[2J\\033[3J\\033[1;1H'";
+      snrs = "sudo nixos-rebuild switch --flake ";
+      hms = "home-manager switch --flake ";
     };
   };
 }

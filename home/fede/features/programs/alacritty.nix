@@ -15,4 +15,11 @@
       };
     };
   };
+
+  
+  home = {
+    sessionVariables = {
+      TERMINAL = "alacritty";
+    };
+  };
 }
