@@ -4,8 +4,8 @@
     enable = true;
 
     settings = {
-      font = rec {
-        normal.family = "FiraCode Nerd Font";
+      font = {
+        normal.family = "CaskaydiaCove Nerd Font";
         bold = { style = "Bold"; };
       };
 
