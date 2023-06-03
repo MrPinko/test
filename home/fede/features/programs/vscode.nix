@@ -2,8 +2,8 @@
 let
   marketplace-extensions = with inputs.nix-vscode-extensions.extensions.${pkgs.system}.vscode-marketplace; [
     sketchbuch.vsc-workspace-sidebar
-    PKief.material-icon-theme
-    bbenoist.Nix
+    pkief.material-icon-theme
+    bbenoist.nix
   ];
 in
 {
@@ -13,6 +13,7 @@ in
 
     extensions = with pkgs.vscode-extensions; [
       b4dm4n.vscode-nixpkgs-fmt
+
 
       usernamehw.errorlens
       christian-kohler.path-intellisense
@@ -78,7 +79,7 @@ in
       *    $$$  / \$$$ |$$ |  $$ |$$ |      $$  _$$<  $$ |  $$ |$$   ____|$$ |  $$ |$$ |      $$ |  $$ |
       *    $$  /   \$$ |\$$$$$$  |$$ |      $$ | \$$\ $$$$$$$  |\$$$$$$$\ $$ |  $$ |\$$$$$$$\ $$ |  $$ |
       *    \__/     \__| \______/ \__|      \__|  \__|\_______/  \_______|\__|  \__| \_______|\__|  \__|
-      */                                                                                             
+      */
       workbench = {
         list.smoothScrolling = true;
         smoothScrolling = true;
@@ -137,7 +138,7 @@ in
             "out"
             "typings"
             "test"
-          ]
+          ];
         };
       };
 

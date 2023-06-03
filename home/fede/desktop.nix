@@ -12,6 +12,7 @@
 
     ./features/programs/alacritty.nix
     ./features/programs/discord.nix
+    ./features/programs/git.nix
     ./features/programs/thunar.nix
 
     # games
