@@ -1,6 +1,6 @@
 {
   programs.git = {
     userName = "MrPinko";
-    userEmail = "fede02rosa@gmail.com";
+    userEmail = "77388947+MrPinko@users.noreply.github.com";
   };
 }
