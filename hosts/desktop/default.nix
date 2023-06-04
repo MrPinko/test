@@ -9,7 +9,6 @@
 
       # desktop 
       ../common/optional/greetd.nix
-      ../common/optional/hyprland.nix
 
       # optional
       ../common/optional/gamemode.nix
@@ -22,6 +21,10 @@
       ../common/optional/optimize-store.nix
 
     ];
+
+  services.greetd.settings.default_session.user = "fede";
+  boot.initrd.systemd.enable = true;
+
 
   networking = {
     hostName = "desktop";
@@ -47,11 +50,9 @@
     # };
   };
 
-  services = {
-    xserver = {
-      enable = true;
-      videoDrivers = ["nvidia"];
-    };
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
   };
 
   hardware = {
