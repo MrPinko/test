@@ -46,6 +46,13 @@
     # };
   };
 
+  services = {
+    xserver = {
+      enable = true;
+      videoDrivers = ["nvidia"];
+    };
+  };
+
   hardware = {
     nvidia = {
       prime.offload.enable = false;
