@@ -37,13 +37,5 @@
   wayland.windowManager.hyprland = {
     enable = true;
     package = inputs.hyprland.packages.${pkgs.system}.default;
-    extraConfig =
-      (import ./monitors.nix {
-        inherit lib;
-        inherit (config) monitors;
-      }) +
-      (import ./config.nix {
-        inherit (config) home colorscheme wallpaper;
-      });
   };
 }
