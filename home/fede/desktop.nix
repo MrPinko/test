@@ -6,7 +6,7 @@
     ./global
 
     # desktop 
-    ./features/desktop/awesomewm.nix
+    ./features/desktop/hyprland.nix
 
     ./features/web/chromium.nix
 
