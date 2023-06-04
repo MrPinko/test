@@ -8,7 +8,7 @@
       ../common/users/fede
 
       # desktop 
-      ../common/optional/awesomewm.nix
+      ../common/optional/greetd.nix
 
       # optional
       ../common/optional/gamemode.nix
