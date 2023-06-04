@@ -1,7 +1,5 @@
 { inputs, lib, config, pkgs, ... }: {
   imports = [
-    ../common
-    ../common/wayland-wm
     inputs.hyprland.homeManagerModules.default
   ];
 
