@@ -9,6 +9,7 @@
 
       # desktop 
       ../common/optional/greetd.nix
+      ../common/optional/hyprland.nix
 
       # optional
       ../common/optional/gamemode.nix
