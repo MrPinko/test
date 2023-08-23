@@ -8,38 +8,36 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot = {
-    initrd = {
-      availableKernelModules = [ "ata_piix" "sr_mod" "uhci_hcd" "virtio_blk" "virtio_pci" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "vmd" "ahci" "nvme" "usb_storage" "uas" "sd_mod" ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-intel" ];
+  boot.extraModulePackages = [ ];
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  fileSystems."/" =
+    { device = "/dev/disk/by-uuid/661571fe-4071-4196-b427-ef954cbb890d";
+      fsType = "ext4";
     };
-    loader = {
-      grub = {
-        enable = true;
-        devices = [ "nodev" ];
-        useOSProber = true;                 # Find all boot options
-      };
-      
-      timeout = 5;
+
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/E139-E426";
+      fsType = "vfat";
     };
-  };
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-label/desktop";
-    fsType = "ext4";
-  };
+  swapDevices =
+    [ { device = "/dev/disk/by-uuid/1d3b7851-b6c8-432d-9b1c-0981b551acc0"; }
+    ];
 
-  fileSystems."/boot/efi" = { 
-    device = "/dev/disk/by-label/DESKTOP";
-    fsType = "vfat";
-  };
+  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
+  # (the default) this is the recommended approach. When using systemd-networkd it's
+  # still possible to use this option, but it's recommended to use it in conjunction
+  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
+  networking.useDHCP = lib.mkDefault true;
+  # networking.interfaces.enp43s0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.wlp0s20f3.useDHCP = lib.mkDefault true;
 
-  swapDevices = [{
-    device = "/swap/swapfile";
-    size = 8196;
-  }];
-
-  nixpkgs.hostPlatform = "x86_64-linux";
-
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
-  hardware.cpu.intel.updateMicrocode = true;
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

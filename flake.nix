@@ -1,31 +1,31 @@
 {
   description = "Your new nix config";
 
-  nixConfig = {
-    extra-substituters = [ "https://cache.m7.rs" ];
-    extra-trusted-public-keys = [ "cache.m7.rs:kszZ/NSwE/TjhOcPPQ16IuUiuRSisdiIwhKZCxguaWg=" ];
-  };
-
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    
-    home-manager = {
-        url = "github:nix-community/home-manager";
-        inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # Nixpkgs
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
+    # nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    # Home manager
+    home-manager.url = "github:nix-community/home-manager/release-23.05";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    # for awesome-git
     nixpkgs-f2k.url = "github:fortuneteller2k/nixpkgs-f2k";
 
     firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
 
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
     let
-      inherit (self) outputs;
       user = "fede";
 
+      inherit (self) outputs;
+
+      pkgs = nixpkgs.legacyPackages."x86_64-linux";
       forAllSystems = nixpkgs.lib.genAttrs [
         "x86_64-linux"
       ];
@@ -41,9 +41,6 @@
         inherit modules pkgs;
         extraSpecialArgs = { inherit inputs outputs; };
       };
-
-      pkgs = nixpkgs.legacyPackages."x86_64-linux";
-
     in
     {
       # Devshell for bootstrapping

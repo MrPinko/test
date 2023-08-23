@@ -1,33 +1,16 @@
-{ inputs, lib, config, pkgs, ... }: 
-{
-  # Enable the X11 windowing system.
-  services = {
-    xserver = {
+{ inputs, outputs, lib, config, pkgs, ... }: {
+  services.xserver = {
+    enable = true;
+    displayManager = {
+      sddm.enable = true;
+      defaultSession = "none+awesome";
+    };
+    windowManager.awesome = {
       enable = true;
-
-      displayManager = {
-        autoLogin = {
-          enable = true;
-          user = "fede";
-        };
-
-        defaultSession = "none+awesome";
-
-        lightdm = {
-          enable = true;
-        };
-      };
-
-      windowManager = {
-        awesome = {
-          enable = true;
-
-          luaModules = lib.attrValues {
-            inherit (pkgs.luaPackages) lgi ldbus luadbi-mysql luaposix;
-          };
-        };
-      };
-
+      luaModules = with pkgs.luaPackages; [
+        luarocks
+        luadbi-mysql
+      ];
     };
   };
 }
