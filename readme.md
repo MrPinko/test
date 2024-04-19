@@ -1,61 +1,44 @@
+[![NixOS Logo](https://img.shields.io/badge/NixOS-white?style=plat-square&logo=nixos&logoColor=5277C3)](https://shields.io/)
+[![built with nix](https://img.shields.io/static/v1?logo=nixos&logoColor=white&label=&message=Built%20with%20Nix&color=41439a)](https://builtwithnix.org)
+![Size](https://img.shields.io/github/repo-size/zendo/nsworld?color=red&label=size&style=plat-square)
 
+# Installation
 
+``` shell
+mkfs.fat -F32 /dev/nvme0n1p3
+mkswap /dev/nvme0n1p4
+swapon /dev/nvme0n1p4
+mkfs.bcachefs /dev/nvme0n1p5
+mkdir /mnt/efi
+nixos-generate-config --root /mnt
 
+nix run github:nix-community/disko -- -m disko hosts/rmt/disko-bcachefs.nix --arg disks '[ "/dev/sda" ]'
+nixos-generate-config --no-filesystems --root /mnt
 
-# structure
+nix run github:nix-community/nixos-anywhere -- --flake .#rmt root@192.168.122.89 --no-substitute-on-destination
 
-```bash
-dotnix
-├── home    #home-manager config
-│   └── fede   #home-manager users
-│       ├── desktop.nix
-│       ├── features
-│       │   ├── cli
-│       │   │   ├── default.nix
-│       │   │   ├── ranger.nix
-│       │   │   ├── starship.nix
-│       │   │   └── zsh.nix
-│       │   ├── desktop  # wm/de config
-│       │   │   ├── awesomewm
-│       │   │   │   └── default.nix
-│       │   │   └── common  # desktop related module
-│       │   │       ├── default.nix
-│       │   │       ├── discord.nix
-│       │   │       ├── firefox.nix
-│       │   │       └── font.nix
-│       │   └── games    # games module
-│       │       ├── default.nix
-│       │       ├── lutris.nix
-│       │       └── steam.nix
-│       └── global
-│           └── default.nix
-├── hosts    #nixos config
-│   ├── common
-│   │   ├── global
-│   │   │   ├── auto-upgrade.nix
-│   │   │   ├── default.nix
-│   │   │   ├── locale.nix
-│   │   │   ├── steam-hardware.nix
-│   │   │   └── zsh.nix
-│   │   ├── optional
-│   │   │   ├── awesomewm.nix
-│   │   │   ├── gamemode.nix
-│   │   │   ├── pipewire.nix
-│   │   │   └── quietboot.nix
-│   │   └── users
-│   │       └── fede
-│   │           └── default.nix
-│   └── desktop
-│       ├── default.nix
-│       └── hardware-configuration.nix
-├── modules    # modules for extending flake.nix
-│   ├── home-manager # modules for extending flake.nix
-│   │   └── default.nix
-│   └── nixos        # modules for extending hosts
-│       └── default.nix
-├── overlays
-│   └── default.nix
-├── flake.nix
-└── shell.nix
-
+nixos-install --no-root-passwd --flake .#host
+--option substituters "https://cache.nixos.org"
+--option substituters "https://mirror.sjtu.edu.cn/nix-channels/store"
 ```
+
+[Config Example](https://github.com/thiagokokada/nix-configs)
+
+[More Example](https://github.com/foo-dogsquared/nixos-config)
+
+# Nix Commands
+
+``` shell
+# Developer Environments
+nix develop --no-write-lock-file github:nix-community/nix-environments#openwrt
+nix flake init -t github:github:MordragT/nix-templates#tauri
+```
+
+# Nix Lang
+
+<!-- <img src="https://raw.githubusercontent.com/NixOS/nixos-artwork/master/logo/nix-snowflake.svg" align="right" alt="Nix logo" width="150"> -->
+
+[Nix one pager](https://github.com/tazjin/nix-1p)
+
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
+

@@ -1,75 +1,75 @@
 {
-  description = "Your new nix config";
+  description = "NIX SAVE THE WORLD";
 
-  nixConfig = {
-    extra-substituters = [ "https://cache.m7.rs" ];
-    extra-trusted-public-keys = [ "cache.m7.rs:kszZ/NSwE/TjhOcPPQ16IuUiuRSisdiIwhKZCxguaWg=" ];
-  };
-
-  inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    
-    home-manager = {
-        url = "github:nix-community/home-manager";
-        inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nixpkgs-f2k.url = "github:fortuneteller2k/nixpkgs-f2k";
-
-    firefox-addons.url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
-
-    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
-  };
-
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
-    let
-      inherit (self) outputs;
-      user = "fede";
-
-      forAllSystems = nixpkgs.lib.genAttrs [
+  outputs =
+    inputs@{
+      self,
+      nixpkgs,
+      flake-parts,
+      ...
+    }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [
         "x86_64-linux"
       ];
 
-      # function for loading nixos configurations
-      mkNixos = modules: nixpkgs.lib.nixosSystem {
-        inherit modules;
-        specialArgs = { inherit inputs outputs; };
-      };
+      imports = [
+        ./hosts
+        ./nixos
+        ./overlays
+        ./home-manager/hm-standalone.nix
+        # inputs.devenv.flakeModule
+      ];
 
-      # function for loading home configurations
-      mkHome = modules: pkgs: home-manager.lib.homeManagerConfiguration {
-        inherit modules pkgs;
-        extraSpecialArgs = { inherit inputs outputs; };
-      };
+      perSystem =
+        {
+          inputs',
+          pkgs,
+          system,
+          ...
+        }:
+        {
+          _module.args.pkgs = import inputs.nixpkgs {
+            inherit system;
+            overlays = builtins.attrValues self.overlays;
+            config = {
+              allowUnfree = true;
+              # allowBroken = true;
+              # allowInsecure = true;
+              # allowUnsupportedSystem = true;
+            };
+          };
 
-      pkgs = nixpkgs.legacyPackages."x86_64-linux";
+          # access pkgs from self & overlays
+          legacyPackages = pkgs;
 
-    in
-    {
-      # Devshell for bootstrapping
-      # Acessible through 'nix develop' or 'nix-shell' (legacy)
-      devShells = forAllSystems (system:
-        let pkgs = nixpkgs.legacyPackages.${system};
-        in import ./shell.nix { inherit pkgs; }
-      );
-
-      nixosModules = import ./modules/nixos;
-      homeManagerModules = import ./modules/home-manager;
-
-      overlays = import ./overlays { inherit inputs outputs pkgs; };
-
-      # NixOS configuration entrypoint
-      # Available through 'sudo nixos-rebuild switch --flake .#your-hostname'
-      # sudo nixos-rebuild switch --flake ~/.config/dotnix/#desktop
-      nixosConfigurations = {
-        desktop = mkNixos [ ./hosts/desktop ];
-      };
-
-      # Standalone home-manager configuration entrypoint
-      # Available through 'home-manager switch --flake ~/.config/dotnix/#your-username@your-hostname'
-      # home-manager switch --flake ~/.config/dotnix/#fede@desktop
-      homeConfigurations = {
-        "fede@desktop" = mkHome [ ./home/fede/desktop.nix ] pkgs;
-      };
+          # nix develop .#rust
+          devShells = import ./devshells.nix { inherit pkgs; };
+        };
     };
+
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    # nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.05";
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    flake-parts.url = "github:hercules-ci/flake-parts";
+  };
+
+  # auto-fetch deps when `nix run/shell/develop`
+  nixConfig = {
+    bash-prompt = "[nix]λ ";
+    # substituters = ["https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"];
+    # extra-substituters = ["https://nix-gaming.cachix.org"];
+    # extra-trusted-public-keys = ["nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="];
+  };
 }
