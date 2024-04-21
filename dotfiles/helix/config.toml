@@ -5,6 +5,7 @@ theme = "everforest_dark"
 completion-trigger-len = 1
 # file-picker.hidden = true
 cursorline = true # highlight current line
+true-color = true
 
 [editor.cursor-shape]
 insert = "bar"
