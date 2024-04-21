@@ -16,10 +16,6 @@ let
   };
 in
 {
-  users = {
-    # mutableUsers = false;
-    # defaultUserShell = pkgs.zsh;
-  };
 
   users.users.${username} = {
     isNormalUser = true;

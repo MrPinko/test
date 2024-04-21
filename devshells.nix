@@ -3,13 +3,13 @@
   default = pkgs.mkShell {
     buildInputs = with pkgs; [
       git
-      age
-      sops
-      ssh-to-age
       home-manager
       nixfmt-rfc-style
     ];
     name = "startup";
+    shellHook = ''
+        fish && exit
+      '';
   };
 
   ###############################################
@@ -25,6 +25,9 @@
       alsa-lib
       flac
     ];
+	shellHook = ''
+      fish && exit
+    '';
   };
 
   ###############################################
@@ -73,6 +76,9 @@
       # freetype
       # fontconfig
     ];
+	shellHook = ''
+      fish && exit
+    '';
   };
 
   ###############################################
@@ -96,6 +102,9 @@
       # pyqt5
       # pyqt6
     ];
+	shellHook = ''
+      fish && exit
+    '';
   };
 
 }

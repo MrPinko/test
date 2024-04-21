@@ -10,6 +10,8 @@
     tree
     wget
     curl
+    nix-ld
+    home-manager
   ];
 
   # make `xdg-open` works inside FHS envs

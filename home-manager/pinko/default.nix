@@ -7,10 +7,10 @@
       ../features/xdg.nix
       ../features/fish.nix
       ../features/tmux.nix
+      ../features/editor.nix
     ]
     ++ lib.optionals nixosConfig.services.xserver.enable [
-      ../features/gui.nix
-      ../features/editor.nix
+      ../features/xdg-gui.nix
       ../features/browsers.nix
       ../features/mods/polkit.nix
     ]

@@ -8,7 +8,10 @@ wsl --unregister nixos
     home.packages = with pkgs; [
       wslu
       wsl-open
+      wget
+      home-manager
       # GUI
+
     ];
   };
 
@@ -25,8 +28,12 @@ wsl --unregister nixos
     # docker-desktop.enable = true;
   };
 
+  #fix vscode
+  programs.nix-ld.enable = true;
+
   # fish
   programs.fish.enable = true;
+  programs.fish.loginShellInit = "cd ~";
   users.defaultUserShell = pkgs.fish;
 
   time.timeZone = "Europe/Rome";

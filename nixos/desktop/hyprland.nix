@@ -13,18 +13,18 @@
     };
   };
 
+  programs.hyprland.enable = true;
+
   home-manager.users.${username} = {
-    wayland.windowManager.hyprland = {
-      enable = true;
-      extraConfig = ''
-        source=./custom.conf
-      '';
-    };
 
     home.packages = with pkgs; [
       # hyprpaper # wallpaper
       hyprpicker
       hyprlock
     ];
-  };
+
+    home.sessionVariables = {
+      NIXOS_OZONE_WL = 1; # Electron wayland native
+    };
+  }
 }
