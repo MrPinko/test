@@ -8,12 +8,16 @@ wsl --unregister nixos
     home.packages = with pkgs; [
       wslu
       wsl-open
-      wget
       home-manager
       # GUI
 
     ];
   };
+
+  services.vscode-server.enable = true;
+  environment.systemPackages = [
+    pkgs.wget
+  ];
 
   wsl = {
     enable = true;
@@ -21,6 +25,11 @@ wsl --unregister nixos
     startMenuLaunchers = true;
     nativeSystemd = true;
 
+    extraBin = with pkgs; [
+      { src = "${coreutils}/bin/uname"; }
+      { src = "${coreutils}/bin/dirname"; }
+      { src = "${coreutils}/bin/readlink"; }
+    ];
     # Enable native Docker support
     # docker-native.enable = true;
 

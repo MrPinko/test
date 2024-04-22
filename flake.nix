@@ -6,6 +6,7 @@
       self,
       nixpkgs,
       flake-parts,
+	  vscode-server,
       ...
     }:
     flake-parts.lib.mkFlake { inherit inputs; } {
@@ -57,5 +58,6 @@
     };
 
     flake-parts.url = "github:hercules-ci/flake-parts";
+	vscode-server.url = "github:nix-community/nixos-vscode-server";
   };
 }
