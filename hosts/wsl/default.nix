@@ -10,12 +10,13 @@ wsl --unregister nixos
       wsl-open
       home-manager
       # GUI
-
     ];
   };
 
+  #fix vscode wsl
   services.vscode-server.enable = true;
   environment.systemPackages = [
+    pkgs.nixd
     pkgs.wget
   ];
 

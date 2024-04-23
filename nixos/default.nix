@@ -27,5 +27,9 @@
         ./desktop/hyprland.nix
       ];
     };
+
+    no-rgb = {
+      imports = [ ./no-rgb.nix ];
+    };
   };
 }

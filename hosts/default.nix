@@ -62,7 +62,7 @@
           ../nixos/fonts.nix
           ../nixos/nixconfig.nix
           inputs.nixos-wsl.nixosModules.wsl
-		  inputs.vscode-server.nixosModules.default
+		      inputs.vscode-server.nixosModules.default
         ];
       };
     };
