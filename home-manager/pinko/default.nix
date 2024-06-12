@@ -9,7 +9,7 @@
       ../features/tmux.nix
       ../features/editor.nix
     ]
-    ++ lib.optionals nixosConfig.services.xserver.enable [
+    ++ lib.optionals nixosConfig.services.pipewire.enable [
       ../features/xdg-gui.nix
       ../features/browsers.nix
       ../features/mods/polkit.nix
@@ -19,4 +19,7 @@
 
   home.stateVersion = nixosConfig.system.stateVersion;
   home.enableNixpkgsReleaseCheck = false;
+
+  # TODO: https://github.com/nix-community/home-manager/issues/5452
+  systemd.user.startServices = "sd-switch";
 }
